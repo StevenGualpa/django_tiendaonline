@@ -36,7 +36,7 @@ def contacto(request):
         subject=request.POST["asunto"]
         message=request.POST["mensaje"]+" " +request.POST["email"]
         email_from=EMAIL_HOST_USER
-        recipient_list=["stevengualpa@hotmail.com"]
+        recipient_list=["stevengualpa@hotmail.com","rino.arias2018@uteq.edu.ec","jorge.gualpa2015@uteq.edu.ec"]
         send_mail(subject,message,email_from,recipient_list)
         return render(request,"gracias.html")
 
