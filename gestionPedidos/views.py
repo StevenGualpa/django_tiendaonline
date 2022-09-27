@@ -1,6 +1,8 @@
+from re import I
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.mail import send_mail
+from gestionPedidos.forms import FormularioContacto
 from gestionPedidos.models import Articulos
 from TiendaOnline.settings import EMAIL_HOST_USER
 
@@ -41,3 +43,22 @@ def contacto(request):
         return render(request,"gracias.html")
 
     return render(request,"contacto.html")
+
+def contacto2(request):
+    
+    if request.method=="POST":
+
+        miFormulario=FormularioContacto(request.POST)
+
+        if miFormulario.is_valid():
+
+            infFrom=miFormulario.cleaned_data
+            send_mail(infFrom['asunto'],infFrom['mensaje'],infFrom.get('email',''),
+            ["stevengualpa@hotmail.com","rino.arias2018@uteq.edu.ec","jorge.gualpa2015@uteq.edu.ec"],)
+
+            return render(request,"gracias.html")
+    else:
+
+        miFormulario=FormularioContacto()
+    
+    return render(request,"formulario_contacto.html",{"form":miFormulario})
