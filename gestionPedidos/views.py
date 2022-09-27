@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from django.core.mail import send_mail
 from gestionPedidos.models import Articulos
+from TiendaOnline.settings import EMAIL_HOST_USER
 
 # Create your views here.
 
@@ -32,6 +33,11 @@ def contacto(request):
     
     if request.method=="POST":
         
+        subject=request.POST["asunto"]
+        message=request.POST["mensaje"]+" " +request.POST["email"]
+        email_from=EMAIL_HOST_USER
+        recipient_list=["stevengualpa@hotmail.com"]
+        send_mail(subject,message,email_from,recipient_list)
         return render(request,"gracias.html")
 
     return render(request,"contacto.html")
